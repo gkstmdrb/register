@@ -77,6 +77,5 @@ private void Logout() {
 
 이름, 아이디, 암호, 암호확인, 학년, 반, 번호 중 하나라도 입력되지 않았다면 경고창이 나온다. <br><br>
 
-![image](https://github.com/gkstmdrb/register/assets/114748816/ebe407cd-7469-47c1-aec5-381264717a60) <br><br>
-
+![image](https://github.com/gkstmdrb/register/assets/114748816/ebe407cd-7469-47c1-aec5-381264717a60) <br>
 [회원가입 코드](https://github.com/gkstmdrb/register/blob/main/JoinController)
