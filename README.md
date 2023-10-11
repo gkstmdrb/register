@@ -116,5 +116,29 @@ private void closeButtonAction(ActionEvent event) {
 ```
 <br><br>
 
-## 관리자 <br>
-관리자를 체크한 후 관리자용 아이디, 비밀번호를 입력하여 로그인에 성공하면 회원관리 메뉴를 열 수 있는 버튼으로 바뀐다.
+## 관리자
+<br>
+관리자를 체크한 후 관리자용 아이디, 비밀번호를 입력하여 로그인에 성공하면 회원관리 메뉴를 열 수 있는 버튼으로 바뀐다. <br><br>
+
+![image](https://github.com/gkstmdrb/register/assets/114748816/0de7c283-1b84-4e69-b5b8-596b5a30cff6) <br><br>
+
+### 회원관리 메뉴
+<br>
+![image](https://github.com/gkstmdrb/register/assets/114748816/08ba08d1-3c1d-4b33-b7bc-0e21882b2314) <br><br>
+
+리스트 읽기를 누르면 테이블에 있는 모든 회원의 정보가 나온다. <br><br>
+
+![image](https://github.com/gkstmdrb/register/assets/114748816/8c54e0a9-756b-4442-a6e1-af760737a4f4) <br><br>
+
+아무 회원 정보를 누른 후 암호, 암호 확인 칸이 같고, 학년, 반, 번호 칸이 범위 내 값이라면 수정한 값으로 바뀐다. <br>
+조건이 만족하면 선택창이 나오고 확인을 누르면 수정이 진행되고 회원관리 메뉴창은 닫힌다. <br><br>
+
+![image](https://github.com/gkstmdrb/register/assets/114748816/aea636f7-f5cc-4a0b-969d-8c20bc1f2e55)<br>
+![image](https://github.com/gkstmdrb/register/assets/114748816/2fecfccd-58bd-4dbf-b77a-64378289bf90)<br>
+![image](https://github.com/gkstmdrb/register/assets/114748816/bbb2598c-6720-436b-8981-25c584501618)<br><br>
+
+### 삭제
+<br>
+아무 회원을 누른 후 삭제 버튼을 누르면 바로 삭제가 된다. <br><br>
+
+![image](https://github.com/gkstmdrb/register/assets/114748816/aa986b7f-bb5c-4f8b-a9a7-7742e10de29d)
