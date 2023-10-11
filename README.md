@@ -47,8 +47,8 @@ public Boolean isUserLogin() {
 ```
 <br><br>
 
-## 로그아웃 <br><br>
-
+## 로그아웃
+<br>
 ![image](https://github.com/gkstmdrb/register/assets/114748816/23a70617-470d-40ff-b527-370e6f501cc0) <br><br>
 
 로그아웃 시 로그아웃 안내창을 띄운 후 로그인 버튼과 회원가입 버튼의 텍스트를 되돌린다. <br><br>
@@ -71,8 +71,8 @@ private void Logout() {
 ```
 <br><br>
 
-## 회원가입 <br><br>
-
+## 회원가입
+<br>
 ![image](https://github.com/gkstmdrb/register/assets/114748816/86a833ac-5b38-4dd2-ae82-67429e10d553) <br><br>
 
 이름, 아이디, 암호, 암호확인, 학년, 반, 번호 중 하나라도 입력되지 않았다면 경고창이 나온다. <br><br>
@@ -116,6 +116,5 @@ private void closeButtonAction(ActionEvent event) {
 ```
 <br><br>
 
-## 관리자 <br><br>
-
+## 관리자 <br>
 관리자를 체크한 후 관리자용 아이디, 비밀번호를 입력하여 로그인에 성공하면 회원관리 메뉴를 열 수 있는 버튼으로 바뀐다.
