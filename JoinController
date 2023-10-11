@@ -1,0 +1,196 @@
+package application;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.naming.spi.DirStateFactory.Result;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
+public class JoinController {
+	@FXML TextField nameTextField, idTextField, hakTextField, banTextField, bunTextField;
+	@FXML PasswordField pwPasswordField, pw2PasswordField;
+	@FXML Button joinButton, cancleButton, closeButton;
+	
+	@FXML
+	private void joinButtonAction(ActionEvent event) {
+		
+		Boolean checkEmpty = false;
+		Boolean checkId = false;
+		Boolean checkPw = false;
+		Boolean checkNum = false;
+		
+		checkEmpty = ischeckEmpty();
+		checkId = ischeckId();
+		checkPw = ischeckPw();
+		checkNum = ischeckNum();
+		
+		// 위의 네 가지 확인 결과가 모두 true이면
+			// DB저장
+		// 그 외에는
+			// 빈칸이 있으면 ==> 경고메세지
+			// 아이디 중복이면 ==> 경고
+			// 비번이 불일치하면 ==> 경고
+			// 학번이 잘못됐으면 ==> 경고
+		if (checkEmpty==true && checkId==true && checkPw==true && checkNum==true) {
+			// DB저장
+			
+			DBconnect conn = new DBconnect();
+			Connection conn2 = conn.getConnection();
+			
+			String sql = "insert into user_table (idx, user_name, user_id, user_pw, hak, ban, bun)"
+					  + " values (user_idx_pk.nextval, ?, ?, ?, ?, ?, ?)";
+			
+			try {
+				PreparedStatement ps = conn2.prepareStatement(sql);
+				ps.setString(1, nameTextField.getText());
+				ps.setString(2, idTextField.getText());
+				ps.setString(3, pwPasswordField.getText());
+				ps.setString(4, hakTextField.getText());
+				ps.setString(5, banTextField.getText());
+				ps.setString(6, bunTextField.getText());
+				
+				ResultSet rs = ps.executeQuery();
+				
+				if(rs.next()) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setContentText("회원가입 성공");
+					alert.show();
+				}
+				
+				rs.close();
+				ps.close();
+				conn2.close();
+				
+				Stage stage = (Stage) closeButton.getScene().getWindow();
+				stage.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			if (checkEmpty==false) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("모든 항목을 입력하세요");
+				alert.show();
+			} else if (checkId==false) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("이미 사용중인 아이디입니다");
+				alert.show();
+			} else if (checkPw==false) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("비밀번호가 일치하지 않습니다");
+				alert.show();
+			} else if (checkNum==false) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("올바르지 않은 학번입니다");
+				alert.show();
+			} 
+		}
+	}
+	
+	private Boolean ischeckNum() {
+		
+		Boolean result = false;
+
+		
+		try {
+			int hak = Integer.parseInt(hakTextField.getText());
+			int ban = Integer.parseInt(banTextField.getText());
+			int bun = Integer.parseInt(bunTextField.getText());
+			
+			if (hak >= 1 && hak <= 3 &&
+				ban >= 1 && ban <= 15 &&
+				bun >= 1 && bun <= 30) {
+				result = true;
+			}
+		} catch (Exception e) {
+
+		}
+		return result;
+	}
+
+	private Boolean ischeckPw() {
+		Boolean result = false;
+		
+		if (pwPasswordField.getText().equals(pw2PasswordField.getText())) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	private Boolean ischeckId() {
+
+		Boolean result = false;
+		
+		DBconnect conn = new DBconnect();
+		Connection conn2 = conn.getConnection();
+		
+		String sql = "select user_id"
+				  + " from user_table"
+				  + " where user_id = ?";
+		
+		try {
+			PreparedStatement ps = conn2.prepareStatement(sql);
+			ps.setString(1, idTextField.getText());
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				result = false;
+			} else {
+				result = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return result;
+	}
+
+	private Boolean ischeckEmpty() {
+		Boolean result = false;
+		
+		if (nameTextField.getText().isEmpty()==false &&
+			idTextField.getText().isEmpty()==false &&
+			pwPasswordField.getText().isEmpty()==false &&
+			pw2PasswordField.getText().isEmpty()==false &&
+			hakTextField.getText().isEmpty()==false &&
+			banTextField.getText().isEmpty()==false &&
+			bunTextField.getText().isEmpty()==false) {
+			result = true;
+		}
+		
+		return result;
+	}
+
+	@FXML
+	private void cancleButtonAction(ActionEvent event) {
+		nameTextField.setText("");
+		idTextField.setText("");
+		hakTextField.setText("");
+		banTextField.setText("");
+		bunTextField.setText("");
+		pwPasswordField.setText("");
+		pw2PasswordField.setText("");
+	}
+	
+	@FXML
+	private void closeButtonAction(ActionEvent event) {
+		Stage stage = (Stage) closeButton.getScene().getWindow();
+		stage.close();
+	}
+}
