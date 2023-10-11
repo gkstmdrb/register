@@ -47,7 +47,7 @@ public Boolean isUserLogin() {
 ```
 <br><br>
 
-### 로그아웃 <br><br>
+## 로그아웃 <br><br>
 
 ![image](https://github.com/gkstmdrb/register/assets/114748816/23a70617-470d-40ff-b527-370e6f501cc0) <br><br>
 
@@ -71,7 +71,7 @@ private void Logout() {
 ```
 <br><br>
 
-### 회원가입 <br><br>
+## 회원가입 <br><br>
 
 ![image](https://github.com/gkstmdrb/register/assets/114748816/86a833ac-5b38-4dd2-ae82-67429e10d553) <br><br>
 
@@ -116,6 +116,6 @@ private void closeButtonAction(ActionEvent event) {
 ```
 <br><br>
 
-### 관리자 <br><br>
+## 관리자 <br><br>
 
 관리자를 체크한 후 관리자용 아이디, 비밀번호를 입력하여 로그인에 성공하면 회원관리 메뉴를 열 수 있는 버튼으로 바뀐다.
