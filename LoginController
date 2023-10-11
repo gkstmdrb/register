@@ -1,0 +1,231 @@
+package application;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.naming.spi.DirStateFactory.Result;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+public class LoginController {
+	
+	Boolean AdminLogin = false;
+	Boolean UserLogin = false;
+	
+	@FXML Button loginButton, joinButton, cancelButton, closeButton;
+	@FXML TextField idTextField;
+	@FXML PasswordField pwPasswordField;
+	@FXML CheckBox adminCheckBox;
+	
+	@FXML
+	private void loginButtonAction(ActionEvent event) {
+		
+	// loginButton == 로그인	
+		// 아이디 또는 비번이 빈칸이면 {
+				// 경고
+		// else {
+			// 관리자에 체크가 되어 있으면
+				// 관리자 로그인 메소드 호출
+				// isAdminLogin()
+			// 그 외에는
+				// 사용자 로그인 메소드 호출
+				// isUserLogin()
+	// 그 외에는 로그아웃
+		if (loginButton.getText().equals("로그인")) {
+			if (idTextField.getText().isBlank() || pwPasswordField.getText().isBlank()) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setContentText("모두 입력");
+					alert.show();
+				} else {
+					if (adminCheckBox.isSelected()==true) {
+						// 관리자 로그인 메소드 호출
+						AdminLogin = isAdminLogin();
+					} else {
+						UserLogin = isUserLogin();
+				}
+			}
+		} else {
+			Logout();
+		}
+	}	
+	private void Logout() {
+		Main.Global_userid = "";
+		loginButton.setText("로그인");
+		idTextField.setText(null);
+		pwPasswordField.setText(null);
+		adminCheckBox.setSelected(false);
+		joinButton.setText("회원가입");
+		AdminLogin = false;
+		UserLogin = false;
+			
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setContentText("로그아웃되었습니다.");
+		alert.show();
+	}
+	public Boolean isUserLogin() {
+		
+		Boolean result = false;
+
+		DBconnect conn = new DBconnect();
+		Connection conn2 = conn.getConnection();
+		
+		String sql = "select user_id, user_pw"
+				  + " from user_table"
+				  + " where user_id = ? and user_pw = ?";
+		
+		try {
+			PreparedStatement ps = conn2.prepareStatement(sql);
+			ps.setString(1, idTextField.getText());
+			ps.setString(2, pwPasswordField.getText());
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				Main.Global_userid = idTextField.getText();
+				result = true;
+				UserLogin = true;
+				loginButton.setText("로그아웃");
+				joinButton.setText("회원정보 수정");
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("로그인 성공");
+				alert.show();
+			} else {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("로그인 실패");
+				alert.show();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+		
+	}
+	public Boolean isAdminLogin() {
+		
+		Boolean result = false;
+		
+		DBconnect conn = new DBconnect();
+		Connection conn2 = conn.getConnection();
+		
+		String sql = "select admin_id, admin_pw"
+				  + " from admin_table"
+				  + " where admin_id = ? and admin_pw = ?";
+		
+		try {
+			PreparedStatement ps = conn2.prepareStatement(sql);
+			ps.setString(1, idTextField.getText());
+			ps.setString(2, pwPasswordField.getText());
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				result = true;
+				AdminLogin = true;
+				loginButton.setText("로그아웃");
+				joinButton.setDisable(false);
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("관리자 로그인 성공");
+				alert.show();
+			} else {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("관리자 로그인 실패");
+				alert.show();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+	
+	@FXML
+	private void joinButtonAction(ActionEvent event) {
+		// 관리자에 체크가 되어 있으면
+			// 로그인 상태이면(AdminLogin == true) ==> 회원관리 띄우기
+			// 로그아웃 상태이면 ==> 아무것도 안함
+		// 그 외에는 (일반인 상태)
+			// 로그인 상태이면(UserLogin == true) ==> 회원정보 띄우기
+			// 로그아웃 상태이면 ==> 회원가입 띄우기
+		if (adminCheckBox.isSelected()==true) {
+			if (AdminLogin == true) {
+				try {
+					Parent root = FXMLLoader.load(getClass().getResource("Manage.fxml"));
+					Stage stage = new Stage();
+					Scene scene = new Scene(root);
+					stage.setScene(scene);
+					stage.setTitle("회원관리 화면");
+					stage.show();
+				} catch(Exception e) {
+					e.printStackTrace();
+					System.out.println("실패");
+				}
+			}
+		} else {
+			if (UserLogin == true) {
+				try {
+					Parent root = FXMLLoader.load(getClass().getResource("modify.fxml"));
+					Stage stage = new Stage();
+					Scene scene = new Scene(root);
+					stage.setScene(scene);
+					stage.setTitle("회원정보수정 화면");
+					stage.show();
+				} catch(Exception e) {
+					e.printStackTrace();
+					System.out.println("실패");
+				}
+			} else {
+				try {
+					Parent root = FXMLLoader.load(getClass().getResource("join.fxml"));
+					Stage stage = new Stage();
+					stage.setTitle("회원가입");
+					Scene scene = new Scene(root,600,400);
+					stage.setScene(scene);
+					stage.show();
+			
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		}
+	}
+	
+	@FXML
+	private void cancelButtonAction(ActionEvent event) {
+		idTextField.setText("");
+		pwPasswordField.setText("");
+	}
+	
+	@FXML
+	private void closeButtonAction(ActionEvent event) {
+		Stage stage = (Stage) closeButton.getScene().getWindow();
+		stage.close();
+	}
+	
+	@FXML
+	private void adminCheckBoxAction(ActionEvent event) {
+		
+		if (adminCheckBox.isSelected()==true) {
+			joinButton.setText("회원관리 메뉴");
+			joinButton.setDisable(true);
+		} else {
+			joinButton.setText("회원가입");
+			joinButton.setDisable(false);
+		}
+	}
+}
