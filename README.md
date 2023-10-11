@@ -95,3 +95,27 @@ private void Logout() {
 취소를 누르면 입력칸이 모두 초기화 되고, <br>
 창닫기를 누르면 창이 닫힌다. <br><br>
 
+``` java
+private void cancleButtonAction(ActionEvent event) {
+		nameTextField.setText(""); // 입력칸 모두 빈칸으로
+		idTextField.setText("");
+		hakTextField.setText("");
+		banTextField.setText("");
+		bunTextField.setText("");
+		pwPasswordField.setText("");
+		pw2PasswordField.setText("");
+	}
+```
+<br><br>
+
+``` java
+private void closeButtonAction(ActionEvent event) {
+		Stage stage = (Stage) closeButton.getScene().getWindow();
+		stage.close(); // 회원가입 창 닫기
+	}
+```
+<br><br>
+
+### 관리자 <br><br>
+
+관리자를 체크한 후 관리자용 아이디, 비밀번호를 입력하여 로그인에 성공하면 회원관리 메뉴를 열 수 있는 버튼으로 바뀐다.
