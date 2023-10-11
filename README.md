@@ -79,4 +79,4 @@ private void Logout() {
 
 ![image](https://github.com/gkstmdrb/register/assets/114748816/ebe407cd-7469-47c1-aec5-381264717a60) <br><br>
 
-회원가입 코드[https://github.com/gkstmdrb/register/blob/main/JoinController]
+[회원가입 코드](https://github.com/gkstmdrb/register/blob/main/JoinController)
