@@ -78,4 +78,20 @@ private void Logout() {
 이름, 아이디, 암호, 암호확인, 학년, 반, 번호 중 하나라도 입력되지 않았다면 경고창이 나온다. <br><br>
 
 ![image](https://github.com/gkstmdrb/register/assets/114748816/ebe407cd-7469-47c1-aec5-381264717a60) <br>
-[회원가입 코드](https://github.com/gkstmdrb/register/blob/main/JoinController)
+[회원가입 코드](https://github.com/gkstmdrb/register/blob/main/JoinController) <br><br>
+
+입력한 값이 적합하다면 성공 메시지가 다오고 창이 닫힌다. <br><br>
+
+![image](https://github.com/gkstmdrb/register/assets/114748816/40b97b05-23e4-45c0-a80f-b15c305308af) <br><br>
+
+암호와 암호확인 칸이 서로 다르다면, <br><br>
+
+![image](https://github.com/gkstmdrb/register/assets/114748816/f5deb675-ed2d-42ab-b2d4-2496f41e7f68) <br><br>
+
+학번이 올바르지 않다면, <br><br>
+
+![image](https://github.com/gkstmdrb/register/assets/114748816/934094c8-d73f-4857-b131-6fa9f9d2033e) <br><br>
+
+취소를 누르면 입력칸이 모두 초기화 되고, <br>
+창닫기를 누르면 창이 닫힌다. <br><br>
+
